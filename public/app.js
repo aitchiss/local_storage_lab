@@ -36,6 +36,7 @@ var handleClick = function(){
   var list = document.querySelector('#todo-list');
   addItem(list, input.value);
   save(input.value);
+  input.value = '';
 
 
   //get the value of the input box
@@ -65,8 +66,8 @@ var handleChange = function(){
   var state = JSON.parse(localStorage.getItem('todoList')) || {list1: [], list2: []};
   var list = document.querySelector('#todo-list');
   var listNodes = list.childNodes;
-  for(var i = 0; i < listNodes.length; i++){
-    list.removeChild(listNodes[i]);
+  while(list.hasChildNodes()){
+    list.removeChild(list.firstChild);
   }
   populate(list, this.value, state);
 }

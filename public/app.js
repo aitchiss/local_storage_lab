@@ -17,6 +17,12 @@ var addItem = function(list, item){
 }
 
 var handleClick = function(){
+  var input = querySelector('#new-item');
+  var list = document.querySelector('#todo-list');
+  addItem(list, input.value);
+  save(input.value);
+
+
   //get the value of the input box
   //get the "todo-list" element from the DOM
   //invoke addItem

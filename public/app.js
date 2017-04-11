@@ -1,15 +1,21 @@
 var init = function(){
-  var state = JSON.parse(localStorage.getItem('todoList')) || [];
+  var state = JSON.parse(localStorage.getItem('todoList')) || {list1: [], list2: []};
   var list = document.querySelector('#todo-list');
   var button = document.querySelector('button');
+  var select = document.querySelector('select');
 
   button.onclick = handleClick;
+  select.onchange = handleChange;
 
-  populate(list, state);
+  console.log(list)
+  console.log(state)
+
+  populate(list, 'list1', state);
 }
 
-var populate = function(list, state){
-  state.forEach(function(listItem){
+var populate = function(list, key, state){
+  array = state[key];
+  array.forEach(function(listItem){
     addItem(list, listItem);
   })
 
@@ -26,7 +32,7 @@ var addItem = function(list, item){
 }
 
 var handleClick = function(){
-  var input = querySelector('#new-item');
+  var input = document.querySelector('#new-item');
   var list = document.querySelector('#todo-list');
   addItem(list, input.value);
   save(input.value);
@@ -39,14 +45,30 @@ var handleClick = function(){
 }
 
 var save = function(item){
-  var state = JSON.parse(localStorage.getItem('todoList')) || [];
-  state.push(item);
+  var select = document.querySelector('select');
+  var selectedList = select.value;
+
+  var state = JSON.parse(localStorage.getItem('todoList')) || {list1: [], list2: []};
+  console.log(state)
+  console.log(state.selectedList)
+  console.log(selectedList)
+  state[selectedList].push(item);
 
   var toSave = JSON.stringify(state);
   localStorage.setItem('todoList', toSave);
 
   //save the item to localStorage 
   //NOTE You'll have to use JSON.stringify
+}
+
+var handleChange = function(){
+  var state = JSON.parse(localStorage.getItem('todoList')) || {list1: [], list2: []};
+  var list = document.querySelector('#todo-list');
+  var listNodes = list.childNodes;
+  for(var i = 0; i < listNodes.length; i++){
+    list.removeChild(listNodes[i]);
+  }
+  populate(list, this.value, state);
 }
 
 window.onload = init;

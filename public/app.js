@@ -9,10 +9,19 @@ var init = function(){
 }
 
 var populate = function(list, state){
+  state.forEach(function(listItem){
+    addItem(list, listItem);
+  })
+
   //for each item in the state, invoke addItem
 }
 
 var addItem = function(list, item){
+  var listItem = document.createElement('li');
+  listItem.innerText = item;
+  list.appendChild(listItem);
+
+
   //add an item to the list
 }
 
